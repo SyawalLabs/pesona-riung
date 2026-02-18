@@ -55,7 +55,7 @@ export const homestayList = [
     deskripsi:
       "Homestay dengan kafe dan restoran. Tepat di pinggir pantai, pemandangan indah.",
     kontak: "-",
-    gambar: "/public/images/del-mar.jpg",
+    gambar: "/images/del-mar.jpg",
     alamat: "Nangamese, Kec. Riung, Kabupaten Ngada, Nusa Tenggara Timur.",
     peta: "https://maps.app.goo.gl/AyR3shHToiyYEEE96",
     review: 42,
