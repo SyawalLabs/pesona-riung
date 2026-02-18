@@ -74,10 +74,19 @@ const { homestayName, homestayPhone } = Astro.props;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("name").value;
-      const date = document.getElementById("date").value;
-      const guests = document.getElementById("guests").value;
-      const message = document.getElementById("message").value;
+      const name =
+        (document.getElementById("name") as HTMLInputElement)?.value || "";
+      const date =
+        (document.getElementById("date") as HTMLInputElement)?.value || "";
+      const guests =
+        (document.getElementById("guests") as HTMLSelectElement)?.value || "";
+      const message =
+        (document.getElementById("message") as HTMLTextAreaElement)?.value ||
+        "";
+
+      // Ambil variabel dari Astro.props
+      const homestayName = "{homestayName}";
+      const homestayPhone = "{homestayPhone}";
 
       // Format pesan untuk WhatsApp
       const waMessage = `Halo, saya ingin booking ${homestayName}.\n\nNama: ${name}\nTanggal: ${date}\nJumlah Tamu: ${guests} orang\nPesan: ${message}`;

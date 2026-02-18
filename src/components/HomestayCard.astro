@@ -40,9 +40,10 @@ const { id, nama, slug, harga, rating, gambar, fasilitas, kontak, review } =
         {nama}
       </a>
       <span
-        class="bg-yellow-400 text-gray-900 px-2 py-1 rounded-lg text-sm font-bold"
+        class="bg-yellow-400 text-gray-900 px-2 py-1 rounded-lg text-sm font-bold flex items-center gap-1"
       >
-        ⭐ {rating}
+        <i class="bi bi-star-fill"></i>
+        {rating}
       </span>
     </div>
 

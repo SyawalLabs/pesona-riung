@@ -7,7 +7,11 @@ let isMenuOpen = false;
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
-      <a href="/" class="text-xl font-bold text-biru-laut"> 🌊 Pesona Riung </a>
+      <a
+        href="/"
+        class="text-xl font-bold text-biru-laut flex items-center gap-2"
+      >Pesona Riung
+      </a>
 
       <!-- Desktop Menu -->
       <div class="hidden md:flex space-x-8">
@@ -22,7 +26,9 @@ let isMenuOpen = false;
       </div>
 
       <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-2xl">☰</button>
+      <button id="menu-btn" class="md:hidden text-2xl"
+        ><i class="bi bi-list"></i></button
+      >
     </div>
 
     <!-- Mobile Menu (hidden by default) -->
