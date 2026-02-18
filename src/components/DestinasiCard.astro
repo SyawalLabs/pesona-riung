@@ -21,6 +21,7 @@ const { id, nama, slug, deskripsi, gambar, aktivitas } = Astro.props;
         src={gambar}
         alt={nama}
         class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+        onerror="this.onerror=null;this.src='/images/riung-347.jpg';"
       />
     </div>
 
