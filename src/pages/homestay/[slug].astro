@@ -1,21 +1,37 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import WhatsAppButton from '../../components/WhatsAppButton.astro';
-import BookingForm from '../../components/BookingForm.astro';
-import { homestayList } from '../../data/homestayData';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import BookingForm from "../../components/BookingForm.astro";
+import { homestayList } from "../../data/homestayData";
 
-// Get slug dari URL
-const { slug } = Astro.params;
-
-// Cari homestay berdasarkan slug
-const homestay = homestayList.find(h => h.slug === slug);
-
-// Jika homestay tidak ditemukan, redirect ke 404
-if (!homestay) {
-  return Astro.redirect('/404');
+// ✅ TAMBAHKAN INI!
+export async function getStaticPaths() {
+  return homestayList.map((homestay) => ({
+    params: { slug: homestay.slug },
+    props: { homestay },
+  }));
 }
 
-const { nama, harga, rating, fasilitas, deskripsi, kontak, gambar, alamat, peta, review } = homestay;
+const { slug } = Astro.params;
+const { homestay } = Astro.props;
+
+// Jika homestay tidak ditemukan
+if (!homestay) {
+  return Astro.redirect("/404");
+}
+
+const {
+  nama,
+  harga,
+  rating,
+  fasilitas,
+  deskripsi,
+  kontak,
+  gambar,
+  alamat,
+  peta,
+  review,
+} = homestay;
 ---
 
 <BaseLayout title={`${nama} - Homestay di Riung`}>
@@ -26,14 +42,16 @@ const { nama, harga, rating, fasilitas, deskripsi, kontak, gambar, alamat, peta,
     <div class="absolute bottom-8 left-8 text-white">
       <h1 class="text-4xl font-bold mb-2">{nama}</h1>
       <div class="flex items-center gap-4">
-        <span class="bg-yellow-400 text-gray-900 px-3 py-1 rounded-lg text-lg font-bold">
+        <span
+          class="bg-yellow-400 text-gray-900 px-3 py-1 rounded-lg text-lg font-bold"
+        >
           ⭐ {rating}
         </span>
         <span>{review} ulasan</span>
       </div>
     </div>
   </div>
-  
+
   <!-- Content -->
   <div class="container mx-auto px-4 py-12">
     <div class="grid lg:grid-cols-3 gap-8">
@@ -44,50 +62,51 @@ const { nama, harga, rating, fasilitas, deskripsi, kontak, gambar, alamat, peta,
           <p class="text-gray-600 mb-2">Harga per malam</p>
           <p class="text-4xl font-bold text-biru-laut">{harga}</p>
         </div>
-        
+
         <!-- Deskripsi -->
         <div class="mb-8">
           <h2 class="text-2xl font-bold mb-4">Tentang Homestay</h2>
           <p class="text-gray-700 leading-relaxed">{deskripsi}</p>
         </div>
-        
+
         <!-- Fasilitas -->
         <div class="mb-8">
           <h2 class="text-2xl font-bold mb-4">Fasilitas</h2>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {fasilitas.map(fas => (
-              <div class="flex items-center gap-2 text-gray-700">
-                <span class="text-green-500 text-xl">✓</span>
-                {fas}
-              </div>
-            ))}
+            {
+              fasilitas.map((fas) => (
+                <div class="flex items-center gap-2 text-gray-700">
+                  <span class="text-green-500 text-xl">✓</span>
+                  {fas}
+                </div>
+              ))
+            }
           </div>
         </div>
-        
+
         <!-- Lokasi -->
         <div>
           <h2 class="text-2xl font-bold mb-4">Lokasi</h2>
           <p class="text-gray-700 mb-4">{alamat}</p>
-          <iframe 
-            src={peta.replace('goo.gl/maps', 'maps.google.com')}
+          <iframe
+            src={peta?.replace("goo.gl/maps", "maps.google.com") || ""}
             class="w-full h-[300px] rounded-xl"
-            loading="lazy"
-          ></iframe>
+            loading="lazy"></iframe>
         </div>
       </div>
-      
+
       <!-- Kolom Kanan (Booking) -->
       <div>
         <!-- Tombol WA Cepat -->
         <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
           <h3 class="text-xl font-semibold mb-4">Kontak Pemilik</h3>
-          <WhatsAppButton 
-            phone={kontak} 
+          <WhatsAppButton
+            phone={kontak}
             message={`Halo, saya tertarik dengan ${nama}. Apakah tersedia untuk...`}
             class="w-full text-base py-3"
           />
         </div>
-        
+
         <!-- Form Booking -->
         <BookingForm homestayName={nama} homestayPhone={kontak} />
       </div>

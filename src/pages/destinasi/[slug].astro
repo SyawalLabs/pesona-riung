@@ -3,9 +3,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import { destinasiList } from "../../data/destinasiData";
 
-const { slug } = Astro.params;
-const destinasi = destinasiList.find((d) => d.slug === slug);
+// ✅ FUNGSI INI YANG DITAMBAHKAN (WAJIB!)
+export async function getStaticPaths() {
+  return destinasiList.map((destinasi) => ({
+    params: { slug: destinasi.slug },
+    props: { destinasi },
+  }));
+}
 
+const { slug } = Astro.params;
+const { destinasi } = Astro.props;
+
+// Jika destinasi tidak ditemukan (fallback)
 if (!destinasi) {
   return Astro.redirect("/404");
 }
