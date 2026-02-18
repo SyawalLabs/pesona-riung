@@ -9,6 +9,23 @@ export interface Props {
 }
 
 const { id, nama, slug, deskripsi, gambar, aktivitas } = Astro.props;
+
+// Dynamic import Astro Assets jika gambar ada di public/images
+let gambarSrc = gambar;
+try {
+  if (gambar && gambar.startsWith("/images/")) {
+    // Hanya import jika path string
+    const imgName = gambar.split("/").pop();
+    // eslint-disable-next-line import/no-dynamic-require, global-require
+    const imported = await import(`../../public/images/${imgName}`);
+    gambarSrc =
+      typeof imported === "object" && imported.default
+        ? imported.default
+        : imported;
+  }
+} catch (e) {
+  gambarSrc = gambar; // fallback ke string path
+}
 ---
 
 <a href={`/destinasi/${slug}`} class="block group">
@@ -18,7 +35,7 @@ const { id, nama, slug, deskripsi, gambar, aktivitas } = Astro.props;
     <!-- Gambar -->
     <div class="h-48 overflow-hidden">
       <img
-        src={gambar}
+        src={gambarSrc}
         alt={nama}
         class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
         onerror="this.onerror=null;this.src='/images/riung-347.jpg';"
