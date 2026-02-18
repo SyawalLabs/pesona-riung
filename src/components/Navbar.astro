@@ -1,0 +1,50 @@
+---
+// State untuk mobile menu (akan dihydrate dengan JS)
+let isMenuOpen = false;
+---
+
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <a href="/" class="text-xl font-bold text-biru-laut"> 🌊 Pesona Riung </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8">
+        <a href="/" class="hover:text-biru-laut transition">Beranda</a>
+        <a href="/destinasi" class="hover:text-biru-laut transition"
+          >Destinasi</a
+        >
+        <a href="/homestay" class="hover:text-biru-laut transition">Homestay</a>
+        <a href="/info-praktis" class="hover:text-biru-laut transition"
+          >Info Praktis</a
+        >
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-2xl">☰</button>
+    </div>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4">
+      <a href="/" class="block py-2 hover:text-biru-laut">Beranda</a>
+      <a href="/destinasi" class="block py-2 hover:text-biru-laut">Destinasi</a>
+      <a href="/homestay" class="block py-2 hover:text-biru-laut">Homestay</a>
+      <a href="/info-praktis" class="block py-2 hover:text-biru-laut"
+        >Info Praktis</a
+      >
+    </div>
+  </div>
+</nav>
+
+<!-- Script untuk toggle mobile menu -->
+<script>
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+</script>

@@ -1,0 +1,38 @@
+---
+// Impor komponen
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+// Props yang bisa diterima
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Jelajahi keindahan 17 Pulau Riung, Flores - Surga tersembunyi di Nusa Tenggara Timur",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/hero-riung.jpg" />
+    <title>{title} | Pesona Riung</title>
+  </head>
+  <body class="font-sans text-gray-800">
+    <Navbar />
+    <main>
+      <slot />
+      <!-- Konten halaman akan muncul di sini -->
+    </main>
+    <Footer />
+  </body>
+</html>

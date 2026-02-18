@@ -1,11 +1,54 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import DestinasiCard from "../components/DestinasiCard.astro";
+import { destinasiList } from "../data/destinasiData";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Pesona Riung - Surga 17 Pulau di Flores">
+  <!-- Hero Section -->
+  <Hero
+    title="Jelajahi 17 Pulau Riung"
+    subtitle="Surga tersembunyi di utara Flores dengan keindahan laut yang memukau"
+    ctaText="Lihat Destinasi"
+    ctaLink="/destinasi"
+  />
+
+  <!-- Destinasi Unggulan -->
+  <section class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+      Destinasi Unggulan
+    </h2>
+    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+      Tiga pulau terpopuler di gugusan 17 Pulau Riung yang wajib kamu kunjungi
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {destinasiList.map((destinasi) => <DestinasiCard {...destinasi} />)}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-biru-laut text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Siap Berpetualang ke Riung?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Temukan homestay terbaik dan rencanakan trip 17 pulau-mu sekarang
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/homestay"
+          class="bg-white text-biru-laut hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition"
+        >
+          Cari Homestay
+        </a>
+        <a
+          href="/info-praktis"
+          class="border-2 border-white text-white hover:bg-white hover:text-biru-laut font-bold py-3 px-8 rounded-full transition"
+        >
+          Info Akses
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

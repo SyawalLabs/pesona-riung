@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { destinasiList } from "../../data/destinasiData";
+
+const { slug } = Astro.params;
+const destinasi = destinasiList.find((d) => d.slug === slug);
+
+if (!destinasi) {
+  return Astro.redirect("/404");
+}
+
+const { nama, deskripsi, aktivitas, waktuTerbaik, gambar, jarak, tips } =
+  destinasi;
+---
+
+<BaseLayout title={`${nama} - Destinasi 17 Pulau Riung`}>
+  <!-- Hero -->
+  <div class="relative h-[60vh] min-h-[400px]">
+    <img src={gambar} alt={nama} class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute bottom-8 left-8 text-white">
+      <h1 class="text-5xl font-bold mb-4">{nama}</h1>
+      <p class="text-xl">{jarak} dari dermaga Riung</p>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+      <!-- Deskripsi -->
+      <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h2 class="text-2xl font-bold mb-4">Tentang {nama}</h2>
+        <p class="text-gray-700 leading-relaxed text-lg">{deskripsi}</p>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-blue-50 rounded-xl p-6 text-center">
+          <div class="text-4xl mb-2">🏝️</div>
+          <h3 class="font-semibold mb-2">Aktivitas</h3>
+          <ul class="text-sm text-gray-600">
+            {aktivitas.map((akt) => <li>{akt}</li>)}
+          </ul>
+        </div>
+
+        <div class="bg-green-50 rounded-xl p-6 text-center">
+          <div class="text-4xl mb-2">⏰</div>
+          <h3 class="font-semibold mb-2">Waktu Terbaik</h3>
+          <p class="text-gray-600">{waktuTerbaik}</p>
+        </div>
+
+        <div class="bg-yellow-50 rounded-xl p-6 text-center">
+          <div class="text-4xl mb-2">💡</div>
+          <h3 class="font-semibold mb-2">Tips</h3>
+          <p class="text-gray-600">{tips}</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div
+        class="bg-gradient-to-r from-biru-laut to-blue-700 text-white rounded-xl p-8 text-center"
+      >
+        <h3 class="text-2xl font-bold mb-4">Siap ke {nama}?</h3>
+        <p class="mb-6">
+          Butuh informasi lebih lanjut? Hubungi pemandu lokal kami
+        </p>
+        <WhatsAppButton
+          phone="6281234567890"
+          message={`Halo, saya ingin info trip ke ${nama} di Riung`}
+          class="inline-flex bg-white text-biru-laut hover:bg-gray-100 px-6 py-3 rounded-full font-bold"
+        />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

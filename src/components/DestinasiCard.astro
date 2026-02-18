@@ -1,0 +1,59 @@
+---
+export interface Props {
+  id: string;
+  nama: string;
+  slug: string;
+  deskripsi: string;
+  gambar: string;
+  aktivitas: string[];
+}
+
+const { id, nama, slug, deskripsi, gambar, aktivitas } = Astro.props;
+---
+
+<a href={`/destinasi/${slug}`} class="block group">
+  <div
+    class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+  >
+    <!-- Gambar -->
+    <div class="h-48 overflow-hidden">
+      <img
+        src={gambar}
+        alt={nama}
+        class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="p-5">
+      <h3
+        class="text-xl font-semibold mb-2 group-hover:text-biru-laut transition"
+      >
+        {nama}
+      </h3>
+
+      <!-- Deskripsi singkat -->
+      <p class="text-gray-600 mb-3 line-clamp-2">{deskripsi}</p>
+
+      <!-- Aktivitas -->
+      <div class="flex flex-wrap gap-2">
+        {
+          aktivitas
+            .slice(0, 2)
+            .map((akt) => (
+              <span class="bg-biru-laut/10 text-biru-laut px-2 py-1 rounded-full text-xs">
+                {akt}
+              </span>
+            ))
+        }
+        {
+          aktivitas.length > 2 && (
+            <span class="bg-biru-laut/10 text-biru-laut px-2 py-1 rounded-full text-xs">
+              +{aktivitas.length - 2}
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</a>

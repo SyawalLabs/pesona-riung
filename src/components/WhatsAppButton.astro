@@ -1,0 +1,25 @@
+---
+export interface Props {
+  phone: string;
+  message?: string;
+  class?: string;
+  children?: any;
+}
+
+const {
+  phone,
+  message = "Halo, saya ingin bertanya tentang wisata Riung",
+  class: className = "",
+} = Astro.props;
+const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+---
+
+<a
+  href={waLink}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={`bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition flex items-center justify-center gap-2 ${className}`}
+>
+  <span class="text-lg">📱</span>
+  <slot>Hubungi via WhatsApp</slot>
+</a>

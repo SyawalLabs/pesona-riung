@@ -1,0 +1,90 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+export interface Props {
+  id: string;
+  nama: string;
+  slug: string;
+  harga: string;
+  rating: number;
+  gambar: string;
+  fasilitas: string[];
+  kontak: string;
+  review: number;
+}
+
+const { id, nama, slug, harga, rating, gambar, fasilitas, kontak, review } =
+  Astro.props;
+---
+
+<div
+  class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+>
+  <!-- Gambar -->
+  <a href={`/homestay/${slug}`} class="block h-48 overflow-hidden">
+    <img
+      src={gambar}
+      alt={nama}
+      class="w-full h-full object-cover hover:scale-110 transition duration-500"
+    />
+  </a>
+
+  <!-- Content -->
+  <div class="p-5">
+    <!-- Header -->
+    <div class="flex justify-between items-start mb-2">
+      <a
+        href={`/homestay/${slug}`}
+        class="text-xl font-semibold hover:text-biru-laut transition"
+      >
+        {nama}
+      </a>
+      <span
+        class="bg-yellow-400 text-gray-900 px-2 py-1 rounded-lg text-sm font-bold"
+      >
+        ⭐ {rating}
+      </span>
+    </div>
+
+    <!-- Harga -->
+    <p class="text-biru-laut font-bold text-lg mb-3">{harga} / malam</p>
+
+    <!-- Fasilitas (2 item pertama) -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      {
+        fasilitas
+          .slice(0, 2)
+          .map((fas) => (
+            <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+              {fas}
+            </span>
+          ))
+      }
+      {
+        fasilitas.length > 2 && (
+          <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+            +{fasilitas.length - 2} lainnya
+          </span>
+        )
+      }
+    </div>
+
+    <!-- Rating & Review -->
+    <p class="text-gray-600 text-sm mb-4">{review} ulasan</p>
+
+    <!-- Tombol WA -->
+    <div class="flex gap-2">
+      <WhatsAppButton
+        phone={kontak}
+        message={`Halo, saya tertarik dengan ${nama}. Apakah tersedia untuk tanggal...`}
+        class="flex-1"
+      />
+      <a
+        href={`/homestay/${slug}`}
+        class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition flex items-center justify-center"
+      >
+        Detail
+      </a>
+    </div>
+  </div>
+</div>
